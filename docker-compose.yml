@@ -1,0 +1,17 @@
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    restart: unless-stopped
+    ports:
+      - ${AMQP_PORT:-5672}:5672  # AMQP protocol port
+      - 15672:15672  # Management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: ${AMQP_USER:-admin}  # Set custom username
+      RABBITMQ_DEFAULT_PASS: ${AMQP_PASS:-admin}  # Set custom password
+
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq-data
